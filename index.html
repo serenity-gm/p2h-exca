@@ -367,14 +367,29 @@
         .btn-wa { padding: 13px 13px; font-size: 15.5px; }
         .summary { font-size: 13px; }
       }
+      /* ---------- Language switch ---------- */
+      .langbar { display: flex; gap: 8px; margin-top: 14px; }
+      .langbar button {
+        font: inherit; font-weight: 700; font-size: 15px;
+        display: inline-flex; align-items: center; gap: 7px;
+        background: transparent; color: #c9d1d6;
+        border: 1.5px solid #4a545c; border-radius: 999px;
+        padding: 7px 14px; cursor: pointer; min-height: 40px;
+      }
+      .langbar button .flag { font-size: 19px; line-height: 1; }
+      .langbar button[aria-pressed="true"] { background: var(--stripe); border-color: var(--stripe); color: #191203; }
     </style>
   </head>
   <body>
     <header class="band">
       <div class="wrap">
         <p class="dept">Serenity International Mining</p>
-        <h1>Form P2H Unit Excavator<br /><span class="thin">Excavator — Mining Team</span></h1>
-        <p class="sub">Pemeriksaan harian alat sebelum &amp; sesudah operasi. Isi semua <strong>51 item</strong>, lalu kirim hasilnya lewat WhatsApp.</p>
+        <h1 id="band-title">Form P2H Unit Excavator<br /><span class="thin">Excavator — Mining Team</span></h1>
+        <p class="sub" id="band-sub">Pemeriksaan harian alat sebelum &amp; sesudah operasi. Isi semua <strong>51 item</strong>, lalu kirim hasilnya lewat WhatsApp.</p>
+        <div class="langbar" role="group" aria-label="Bahasa / 语言">
+          <button type="button" id="lang-id" aria-pressed="true"><span class="flag">🇮🇩</span> Indonesia</button>
+          <button type="button" id="lang-zh" aria-pressed="false"><span class="flag">🇨🇳</span> 中文</button>
+        </div>
       </div>
     </header>
 
@@ -436,7 +451,7 @@
 
       <!-- ===== STOP banner ===== -->
       <div class="stop-banner" id="stop-banner" role="alert">
-        <p class="big">Stop Operasi</p>
+        <p class="big" id="stop-big">Stop Operasi</p>
         <p id="stop-detail">Ada kerusakan kode bahaya AA — alat tidak boleh dioperasikan sampai diperbaiki.</p>
       </div>
 
@@ -448,8 +463,8 @@
           <span class="progress" id="progress">Rusak: <strong>0</strong> dari 51 item</span>
         </div>
         <div class="legend">
-          <span><span class="badge aa">AA</span> Stop operasi &amp; perbaiki</span>
-          <span><span class="badge a">A</span> Perbaiki dalam 1–12 jam</span>
+          <span><span class="badge aa">AA</span> <span id="legend-aa">Stop operasi &amp; perbaiki</span></span>
+          <span><span class="badge a">A</span> <span id="legend-a">Perbaiki dalam 1–12 jam</span></span>
         </div>
       </section>
 
@@ -468,9 +483,9 @@
       <section class="rules" aria-labelledby="h-aturan">
         <h2 id="h-aturan">Aturan Kode Bahaya</h2>
         <ul>
-          <li><span class="badge aa">AA</span><span>Kode bahaya <strong>AA</strong> = stop operasi dan lakukan perbaikan.</span></li>
-          <li><span class="badge a">A</span><span>Kode bahaya <strong>A</strong> = kerusakan harus diperbaiki dalam 1–12 jam.</span></li>
-          <li class="critical"><span class="badge aa">AA</span><span>Dilarang mengoperasikan alat dengan kerusakan kode bahaya AA.</span></li>
+          <li><span class="badge aa">AA</span><span id="rule-1">Kode bahaya <strong>AA</strong> = stop operasi dan lakukan perbaikan.</span></li>
+          <li><span class="badge a">A</span><span id="rule-2">Kode bahaya <strong>A</strong> = kerusakan harus diperbaiki dalam 1–12 jam.</span></li>
+          <li class="critical"><span class="badge aa">AA</span><span id="rule-3">Dilarang mengoperasikan alat dengan kerusakan kode bahaya AA.</span></li>
          
         </ul>
       </section>
@@ -486,7 +501,7 @@
         </div>
         <button type="button" class="btn-wa" id="btn-kirim">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91A9.87 9.87 0 0 0 12.04 2m0 18.03h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 8.24 8.25c0 4.54-3.7 8.23-8.24 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.8-.23-.09-.39-.13-.56.12-.16.25-.64.8-.78.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.35-.81-1.6-.22-.22-.47-.23-.64-.23h-.55c-.19 0-.49.07-.8.37-.3.31-1.16 1.13-1.16 2.77s1.19 3.22 1.35 3.44c.17.22 2.34 3.57 5.67 5 .79.34 1.41.55 1.89.7.8.25 1.52.22 2.09.13.64-.1 1.96-.79 2.42-1.55.45-.76.45-1.41.31-1.55-.13-.13-.24-.21-.49-.33"/></svg>
-          Kirim via WhatsApp
+          <span id="kirim-label">Kirim via WhatsApp</span>
         </button>
       </div>
     </div>
@@ -549,12 +564,69 @@
         [51, "Tangki bersih pada permukaan", "A"]
       ];
 
+      /* ===== Teks Mandarin 51 item — dari form kertas RIM ===== */
+      var ITEMS_ZH = {
+        "1": "机具外观有无损坏",
+        "2": "外置构件固定螺丝是否紧固有效",
+        "3": "底护板有无渗漏痕迹",
+        "4": "液压泵、分配阀有无渗漏",
+        "5": "全车液压管路有无渗漏",
+        "6": "发动机仓内有无渗漏",
+        "7": "旋转马达固定螺栓",
+        "8": "驾驶舱内电器设备通电测试",
+        "9": "驾驶舱内清洁",
+        "10": "仪表显示",
+        "11": "行车电脑有无故障码",
+        "12": "故障报警蜂鸣器",
+        "13": "座椅",
+        "14": "安全带",
+        "15": "电气设备控制开关",
+        "16": "冷却液位",
+        "17": "冷却液箱盖",
+        "18": "发动机机油油位",
+        "19": "机油注油口盖",
+        "20": "液压油油位",
+        "21": "液压油箱盖",
+        "22": "燃油箱盖",
+        "23": "旋转马达齿轮油",
+        "24": "旋转马达齿轮油盖",
+        "25": "散热器风扇皮带/发电机皮带",
+        "26": "旋转制动系统",
+        "27": "全车工作灯",
+        "28": "喇叭",
+        "29": "雨刮器",
+        "30": "后视镜",
+        "31": "各部位润滑脂",
+        "32": "空气滤清器清洁度",
+        "33": "燃油油水分离器清洁度",
+        "34": "全车液压油缸有无刮伤、渗漏",
+        "35": "全车液压油缸管路卡箍",
+        "36": "履带有无异常磨损",
+        "37": "履带板有无异常磨损缺失",
+        "38": "驱动轮有无缺失或异常磨损",
+        "39": "支重轮有无缺失或异常磨损",
+        "40": "铲斗及连接销轴润滑情况",
+        "41": "铲斗及连接销轴松紧情况",
+        "42": "底盘车架堆积物清理",
+        "43": "仓位堆积物清理",
+        "44": "铲斗斗齿、齿根是否有缺失/有无破损",
+        "45": "主电源清洁和连接情况",
+        "46": "灭火器",
+        "47": "安全警示灯",
+        "48": "安全警示锥",
+        "49": "三角垫木",
+        "50": "对讲机是否完好",
+        "51": "水箱表面是否干净"
+};
+
       var WA_NUMBER = "6285217115363";
 
       /* ===== State ===== */
       var state = {}; // no -> { status: 'normal'|'rusak', ket: '' }
       ITEMS.forEach(function (it) { state[it[0]] = { status: "normal", ket: "" }; });
       var shift = "Pagi";
+      var itemDivs = [];
+      var lang = "id";
 
       var $ = function (id) { return document.getElementById(id); };
       var itemsEl = $("items");
@@ -573,7 +645,8 @@
         noEl.textContent = no + ".";
         var textEl = document.createElement("div");
         textEl.className = "item-text";
-        textEl.appendChild(document.createTextNode(text));
+        var textNode = document.createTextNode(text);
+        textEl.appendChild(textNode);
         var badge = document.createElement("span");
         badge.className = "badge " + (code === "AA" ? "aa" : "a");
         badge.textContent = code;
@@ -609,6 +682,7 @@
         ket.addEventListener("input", function () { state[no].ket = ket.value; });
 
         div._bNormal = bNormal; div._bRusak = bRusak; div._ket = ket;
+        div._textNode = textNode; div._badge = badge; itemDivs.push(div);
         toggle.appendChild(bNormal);
         toggle.appendChild(bRusak);
         div.appendChild(top);
@@ -634,23 +708,28 @@
         var dmg = damagedList();
         var aaDmg = dmg.filter(function (it) { return it[2] === "AA"; });
 
-        $("progress").innerHTML = "Rusak: <strong>" + dmg.length + "</strong> dari 51 item";
+        $("progress").innerHTML = lang === "zh"
+          ? "损坏：<strong>" + dmg.length + "</strong> / 51 项"
+          : "Rusak: <strong>" + dmg.length + "</strong> dari 51 item";
 
         var count = $("sum-count");
-        count.textContent = dmg.length + " item rusak";
+        count.textContent = lang === "zh" ? dmg.length + " 项损坏" : dmg.length + " item rusak";
         count.classList.toggle("bad", dmg.length > 0);
         $("sum-sub").textContent = dmg.length === 0
-          ? "Semua item normal"
-          : (aaDmg.length > 0 ? aaDmg.length + " di antaranya kode AA" : "Tidak ada kode AA yang rusak");
+          ? (lang === "zh" ? "全部项目正常" : "Semua item normal")
+          : (aaDmg.length > 0
+              ? (lang === "zh" ? "其中 " + aaDmg.length + " 项为 AA 级" : aaDmg.length + " di antaranya kode AA")
+              : (lang === "zh" ? "无 AA 级损坏" : "Tidak ada kode AA yang rusak"));
         $("sum-stop").classList.toggle("show", aaDmg.length > 0);
 
         var banner = $("stop-banner");
         banner.classList.toggle("show", aaDmg.length > 0);
         if (aaDmg.length > 0) {
-          $("stop-detail").textContent =
-            "STOP OPERASI — ada kerusakan kode AA pada item " +
-            aaDmg.map(function (it) { return it[0]; }).join(", ") +
-            ". Alat tidak boleh dioperasikan sampai diperbaiki.";
+          $("stop-detail").textContent = lang === "zh"
+            ? "停止操作 — 第 " + aaDmg.map(function (it) { return it[0]; }).join("、") + " 项存在 AA 级危险损坏。修复前禁止操作设备。"
+            : "STOP OPERASI — ada kerusakan kode AA pada item " +
+              aaDmg.map(function (it) { return it[0]; }).join(", ") +
+              ". Alat tidak boleh dioperasikan sampai diperbaiki.";
         }
       }
 
@@ -679,11 +758,12 @@
       var now = new Date();
       $("f-tanggal").value = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
       var hariNama = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+      var hariNamaZh = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
       function refreshHari() {
         var v = $("f-tanggal").value;
         if (!v) { $("hari-hint").textContent = ""; return; }
         var d = new Date(v + "T00:00:00");
-        if (!isNaN(d.getTime())) $("hari-hint").textContent = "Hari " + hariNama[d.getDay()];
+        if (!isNaN(d.getTime())) $("hari-hint").textContent = lang === "zh" ? hariNamaZh[d.getDay()] : "Hari " + hariNama[d.getDay()];
       }
       $("f-tanggal").addEventListener("change", refreshHari);
       refreshHari();
@@ -735,6 +815,129 @@
         var url = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
         window.open(url, "_blank");
       });
+
+
+      /* ===== Bahasa tampilan: Indonesia / 中文 (format kirim WhatsApp TIDAK berubah) ===== */
+      var T = {
+        id: {
+          docTitle: "Form P2H Excavator",
+          bandTitle: "Form P2H Unit Excavator<br /><span class=\"thin\">Excavator — Mining Team</span>",
+          bandSub: "Pemeriksaan harian alat sebelum &amp; sesudah operasi. Isi semua <strong>51 item</strong>, lalu kirim hasilnya lewat WhatsApp.",
+          hData: "Data Operator & Unit",
+          labNama: "Nama", labId: "ID", labTanggal: "Hari / Tanggal", labType: "Type Alat",
+          labUnit: "No. Alat", labGroup: "Group", labShift: "Shift", labDept: "Dept",
+          labLokasi: "Lokasi Kerja", labHmAwal: "HM Awal", labHmAkhir: "HM Akhir",
+          phNama: "Nama operator", phId: "ID karyawan", phUnit: "cth. E144", phGroup: "Group kerja",
+          phDept: "Departemen", phLokasi: "cth. TOS 10",
+          phCatatan: "Hal lain yang perlu disampaikan ke foreman / pengawas…",
+          shiftPagi: "Pagi", shiftMalam: "Malam",
+          stopBig: "Stop Operasi",
+          hCheck: "Checklist Pemeriksaan — 51 Item",
+          btnAll: "✓ Semua Normal",
+          legendAa: "Stop operasi & perbaiki", legendA: "Perbaiki dalam 1–12 jam",
+          hCatatan: "Catatan Tambahan", labCatatan: "Catatan (jika ada)",
+          hAturan: "Aturan Kode Bahaya",
+          rule1: "Kode bahaya <strong>AA</strong> = stop operasi dan lakukan perbaikan.",
+          rule2: "Kode bahaya <strong>A</strong> = kerusakan harus diperbaiki dalam 1–12 jam.",
+          rule3: "Dilarang mengoperasikan alat dengan kerusakan kode bahaya AA.",
+          rule4: "Setiap awal &amp; akhir shift wajib menyerahkan P2H ke foreman lengkap dengan tanda tangan, lalu kumpul ke office.",
+          sumStop: "Stop Operasi — kode AA rusak",
+          kirim: "Kirim via WhatsApp",
+          normal: "Normal", rusak: "Rusak",
+          badgeAa: "Kode bahaya AA — stop operasi", badgeA: "Kode bahaya A — perbaiki 1–12 jam"
+        },
+        zh: {
+          docTitle: "P2H 挖掘机检查表",
+          bandTitle: "P2H 日点检表<br /><span class=\"thin\">挖掘机 — 采矿小组</span>",
+          bandSub: "设备操作前与操作后的每日检查。填写全部 <strong>51 项</strong>，然后通过 WhatsApp 发送结果。",
+          hData: "操作员与机具信息",
+          labNama: "名字", labId: "工号", labTanggal: "日期", labType: "机具类型",
+          labUnit: "机具编号", labGroup: "班组", labShift: "班次", labDept: "部门",
+          labLokasi: "工作地点", labHmAwal: "开始小时表", labHmAkhir: "结束小时表",
+          phNama: "操作员名字", phId: "员工工号", phUnit: "例：E144", phGroup: "工作班组",
+          phDept: "部门", phLokasi: "例：TOS 10",
+          phCatatan: "需要向工长 / 监督员说明的其他事项…",
+          shiftPagi: "白班", shiftMalam: "夜班",
+          stopBig: "停止操作",
+          hCheck: "检查项目 — 51 项",
+          btnAll: "✓ 全部正常",
+          legendAa: "停止操作和立刻修理", legendA: "1-12小时内必须维修",
+          hCatatan: "备注", labCatatan: "备注（如有）",
+          hAturan: "危险符号规则",
+          rule1: "危险符号 <strong>AA</strong> = 停止操作和立刻修理。",
+          rule2: "危险符号 <strong>A</strong> = 1-12小时内必须维修。",
+          rule3: "AA符号的项目未修复之前禁止操作。",
+          rule4: "每班开始和结束时提交P2H给工长并签字，提交到办公室。",
+          sumStop: "停止操作 — AA 级损坏",
+          kirim: "通过 WhatsApp 发送",
+          normal: "正常", rusak: "损坏",
+          badgeAa: "危险符号 AA — 停止操作", badgeA: "危险符号 A — 1-12 小时内维修"
+        }
+      };
+
+      function labelFor(id) { return document.querySelector('label[for="' + id + '"]'); }
+
+      function setLang(l) {
+        lang = l;
+        var s = T[l];
+        try { localStorage.setItem("p2h-lang", l); } catch (e) {}
+        document.documentElement.lang = l === "zh" ? "zh-CN" : "id";
+        document.title = s.docTitle;
+        $("lang-id").setAttribute("aria-pressed", l === "id" ? "true" : "false");
+        $("lang-zh").setAttribute("aria-pressed", l === "zh" ? "true" : "false");
+        $("band-title").innerHTML = s.bandTitle;
+        $("band-sub").innerHTML = s.bandSub;
+        $("h-data").textContent = s.hData;
+        labelFor("f-nama").textContent = s.labNama;
+        labelFor("f-id").textContent = s.labId;
+        labelFor("f-tanggal").textContent = s.labTanggal;
+        labelFor("f-type").textContent = s.labType;
+        labelFor("f-unit").textContent = s.labUnit;
+        labelFor("f-group").textContent = s.labGroup;
+        document.querySelector("#shift-pagi").closest(".field").querySelector("label").textContent = s.labShift;
+        labelFor("f-dept").textContent = s.labDept;
+        labelFor("f-lokasi").textContent = s.labLokasi;
+        labelFor("f-hm-awal").textContent = s.labHmAwal;
+        labelFor("f-hm-akhir").textContent = s.labHmAkhir;
+        $("f-nama").placeholder = s.phNama;
+        $("f-id").placeholder = s.phId;
+        $("f-unit").placeholder = s.phUnit;
+        $("f-group").placeholder = s.phGroup;
+        $("f-dept").placeholder = s.phDept;
+        $("f-lokasi").placeholder = s.phLokasi;
+        labelFor("f-catatan").textContent = s.labCatatan;
+        $("f-catatan").placeholder = s.phCatatan;
+        $("shift-pagi").textContent = s.shiftPagi;
+        $("shift-malam").textContent = s.shiftMalam;
+        $("stop-big").textContent = s.stopBig;
+        $("h-check").textContent = s.hCheck;
+        $("btn-all-normal").textContent = s.btnAll;
+        $("legend-aa").textContent = s.legendAa;
+        $("legend-a").textContent = s.legendA;
+        $("h-catatan").textContent = s.hCatatan;
+        $("h-aturan").textContent = s.hAturan;
+        $("rule-1").innerHTML = s.rule1;
+        $("rule-2").innerHTML = s.rule2;
+        $("rule-3").innerHTML = s.rule3;
+        $("sum-stop").textContent = s.sumStop;
+        $("kirim-label").textContent = s.kirim;
+        ITEMS.forEach(function (it, idx) {
+          var div = itemDivs[idx];
+          if (!div) return;
+          div._textNode.textContent = l === "zh" ? (ITEMS_ZH[it[0]] || it[1]) : it[1];
+          div._bNormal.textContent = s.normal;
+          div._bRusak.textContent = s.rusak;
+          div._badge.title = it[2] === "AA" ? s.badgeAa : s.badgeA;
+          div._ket.placeholder = l === "zh" ? "第" + it[0] + "项损坏说明…" : "Keterangan kerusakan item " + it[0] + "…";
+        });
+        refreshHari();
+        updateSummary();
+      }
+      $("lang-id").addEventListener("click", function () { setLang("id"); });
+      $("lang-zh").addEventListener("click", function () { setLang("zh"); });
+      var savedLang = "id";
+      try { savedLang = localStorage.getItem("p2h-lang") || "id"; } catch (e) {}
+      if (savedLang === "zh") setLang("zh");
 
       updateSummary();
     </script>
